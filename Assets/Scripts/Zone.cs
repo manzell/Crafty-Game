@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector; 
 
-public class Zone : MonoBehaviour
+[CreateAssetMenu]
+public class Zone : SerializedScriptableObject
 {
-    Node node; 
+    [SerializeField] Node node;
+    [SerializeField] Dictionary<Item, int> availableItems;
+    public Dictionary<Item, int> AvailableItems => availableItems; 
 }
