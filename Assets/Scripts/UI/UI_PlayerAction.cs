@@ -2,26 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using System.Linq;
+using static UnityEditor.Progress;
 
-public class UI_PlayerAction : MonoBehaviour
+public class UI_PlayerAction : MonoBehaviour, IDropHandler
 {
     [SerializeField] PlayerAction action;
     [SerializeField] TextMeshProUGUI actionName; 
     [SerializeField] GameObject progressFrame;
-    [SerializeField] Image progressImage;
+    [SerializeField] Image progressImage, inputIcon;
     [SerializeField] Button button;
-    [SerializeField] Player player;
+    [field: SerializeField] public IEnumerable<Item> Inputs { get; private set; } 
 
-    public void Awake()
+
+    public void Setup(PlayerAction action)
     {
+        this.action = action;
         actionName.text = action.name;
-        button.onClick.AddListener(() => action.Action(player));
+        button.onClick.AddListener(() => action.Action(FindObjectOfType<Player>())); 
 
         if (action is ITakeTime timedAction)
             button.onClick.AddListener(() => StartCoroutine(AnimateAction(timedAction.time)));
         else
             button.onClick.AddListener(() => StartCoroutine(AnimateAction(0)));
+    }
+
+    public void ClearItem()
+    {
+        Inputs = null;
+        inputIcon.sprite = null; 
     }
 
     public IEnumerator AnimateAction(float time) 
@@ -40,17 +52,28 @@ public class UI_PlayerAction : MonoBehaviour
             progress += (action as ITakeTime).interval;
             if (action.intervalSound != null)
                 source.PlayOneShot(action.intervalSound);
-            size.x = progressFrame.GetComponent<RectTransform>().sizeDelta.x * Mathf.Clamp01(progress / time); 
+
+            float progressPct = Mathf.Clamp01(progress / time);
+            float frameWidth = progressFrame.GetComponent<RectTransform>().rect.width;
+
+            size.x = frameWidth * progressPct; 
             progressImage.rectTransform.sizeDelta = size;
+
             yield return new WaitForSeconds((action as ITakeTime).interval);
         }
 
         if (action.completeSound)
             source.PlayOneShot(action.completeSound);
-        action.actionEnd.Invoke(player);
+        action.actionEnd.Invoke(FindObjectOfType<Player>(), Inputs);
 
         size.x = 0;
         progressImage.rectTransform.sizeDelta = size;
         button.enabled = true;
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        Inputs = eventData.selectedObject.GetComponent<UI_Item>().Items;
+        inputIcon.sprite = Inputs.First().Data.itemSprite;
     }
 } 

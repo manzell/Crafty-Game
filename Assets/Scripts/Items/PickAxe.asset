@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: PickAxe
   m_EditorClassIdentifier: 
   name: Pick Axe
-  actions:
+  <Actions>k__BackingField:
   - {fileID: 11400000, guid: dcf3b2997d39c33409d1a6959fda1c5a, type: 2}
+  <weight>k__BackingField: 3
+  durability: 25
+  maxDurability: 25

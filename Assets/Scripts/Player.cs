@@ -6,18 +6,28 @@ using Sirenix.OdinInspector;
 
 public class Player : SerializedMonoBehaviour
 {
-    public UnityEvent<PlayerAction> gainLevel = new(); 
+    public UnityEvent<PlayerAction> gainLevelEvent = new(); 
+    public UnityEvent<Item> addItemEvent = new(), removeItemEvent = new();
 
-    [SerializeField] List<Item> inventory;
-    [SerializeField] public Dictionary<PlayerAction, int> experience;
+    [field: SerializeField] public List<Item> inventory { get; private set; }
+    [field: SerializeField] public Dictionary<PlayerAction, int> experience { get; private set; }
 
-    public List<Item> Inventory => inventory; 
-    public Zone currentZone;
+    public ZoneData currentZone;
     public PlayerAction currentAction { get; private set; }
 
     public void SetCurrentAction(PlayerAction action) => currentAction = action;
 
-    public void GiveItem(Item item) => inventory.Add(item);
+    public void GiveItem(Item item)
+    {
+        inventory.Add(item);
+        addItemEvent.Invoke(item); 
+    }
+
+    public void RemoveItem(Item item)
+    {
+        if (inventory.Remove(item))
+            removeItemEvent.Invoke(item); 
+    }
 
     public int GetLevel(PlayerAction action) => experience.ContainsKey(action) ? Mathf.FloorToInt(Mathf.Log(experience[action], 5f)) : 0;
 
@@ -31,11 +41,11 @@ public class Player : SerializedMonoBehaviour
         Debug.Log($"Gaines {amount} XP in {action.name}");
 
         if (GetLevel(action) != oldLevel)
-            gainLevel.Invoke(action); 
+            gainLevelEvent.Invoke(action); 
     }
 
     private void Awake()
     {
-        gainLevel.AddListener(action => Debug.Log($"Player is now Level {GetLevel(action)} in {action}")); 
+        gainLevelEvent.AddListener(action => Debug.Log($"Player is now Level {GetLevel(action)} in {action}")); 
     }
 }

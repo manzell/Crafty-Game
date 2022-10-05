@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 /* How mining works:
@@ -12,38 +13,42 @@ using UnityEngine;
  * Higher quality gathering items have more durability
  */
 
-[CreateAssetMenu] 
 public class MineOre : PlayerAction, ITakeTime
 {
-    public float time { get; private set; } = 10f;
-    public float interval { get; private set; } = 1.1f;
+    [field: SerializeField] public float time { get; private set; } = 10f;
+    [field: SerializeField] public float interval { get; private set; } = 1.1f;
 
-    protected override bool Can(Player player) => player.currentZone.AvailableItems.Any(item => item.Key is IMineable);
+    public override bool Can(Player player, IEnumerable<Item> inputs) => inputs.Any(input => input is IMiningTool) && player.currentZone.availableItems.Any(item => item.Key is IMineable);
 
-    protected override void Prepare(Player player)
+    public override void Prepare(Player player, IEnumerable<Item> inputs)
     {
         time = Mathf.Clamp(10f - player.GetLevel(this) * 0.1f, 5f, 10f);
     }
 
-    protected override void Complete(Player player)
+    public override void Complete(Player player, IEnumerable<Item> inputs)
     {
-        IMiningTool tool = player.Inventory.Where(Item => Item is IMiningTool).First() as IMiningTool;
-        int seed = Random.Range(0, player.currentZone.AvailableItems.Where(item => item.Key is IMineable).Sum(item => player.currentZone.AvailableItems[item.Key]));
+        IMiningTool tool = inputs.First(input => input is IMiningTool) as IMiningTool; 
+        int seed = Random.Range(0, player.currentZone.availableItems.Where(item => item.Key is IMineable).Sum(item => player.currentZone.availableItems[item.Key]));
         float amountMined = 1f + Random.Range(0, 0.1f * player.GetLevel(this));
         float damageChance = Mathf.Clamp(.5f - (player.GetLevel(this) * 0.02f), 0.075f, .5f) - tool.DamageChanceReduction;
 
-        foreach (Ore item in player.currentZone.AvailableItems.Where(item => item.Key is IMineable).Select(item => item.Key))
+        foreach (OreData oreData in player.currentZone.availableItems.Where(item => item.Key is IMineable).Select(item => item.Key))
         {
-            seed -= player.currentZone.AvailableItems[item];
+            seed -= player.currentZone.availableItems[oreData];
 
             if (seed <= 0)
             {
-                Ore awardedItem = Instantiate(item);
-                awardedItem.SetWeight(amountMined);
+                GameObject g = new GameObject(oreData.name);
+                g.transform.parent = player.transform;
 
-                Debug.Log($"Mining Successful, mined {amountMined.ToString("0.0")}kg of {awardedItem.name}");
-                player.GiveItem(awardedItem);
-                player.GiveExperience(this, Mathf.RoundToInt(amountMined * 10)); 
+                Ore ore = g.AddComponent<Ore>();
+                ore.Setup(oreData);
+                ore.SetWeight(amountMined);
+
+                player.GiveItem(ore);
+                player.GiveExperience(this, Mathf.RoundToInt(amountMined * 10));
+
+                Debug.Log($"Mining Successful, mined {amountMined.ToString("0.0")}kg of {ore.name}");
 
                 if (tool is IDurableItem durableTool && Random.value < damageChance)
                     durableTool.AdjustDurability(-0.1f);
@@ -61,5 +66,4 @@ public interface IMiningTool
 
 public interface IMineable
 {
-    float OrePurity { get; }
 }

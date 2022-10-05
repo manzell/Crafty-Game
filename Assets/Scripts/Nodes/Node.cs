@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChopTrees : MonoBehaviour
+public class Node : MonoBehaviour
 {
-
+    public NodeData Data; 
 }

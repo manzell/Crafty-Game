@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class Ore : Item, IMineable
+public class Ore : Item, IMineable, ISmeltable
 {
-    enum MetalType { Iron, Gold, Platinum, SIlver }
+    [SerializeField] OreData.MetalType metalType;
+    [field: SerializeField] public Dictionary<OreData.MetalType, float> MetalConcentrations { get; private set; } = new(); 
 
-    [SerializeField] new float weight;
-    [SerializeField] MetalType metalType;
-    [SerializeField] float purity;
+    public override void Setup(ItemData data)
+    {
+        Data = data; 
+        OreData oreData = data as OreData;
 
-    public float OrePurity => purity; 
+        foreach(KeyValuePair<OreData.MetalType, float> kvp in oreData.MetalConcentrations)
+            MetalConcentrations.Add(kvp.Key, Random.Range(0, kvp.Value));
+    }
 }
