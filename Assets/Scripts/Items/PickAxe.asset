@@ -12,9 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1060e2fd0be9834cb618f3654f532d0, type: 3}
   m_Name: PickAxe
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   name: Pick Axe
   <Actions>k__BackingField:
   - {fileID: 11400000, guid: dcf3b2997d39c33409d1a6959fda1c5a, type: 2}
-  <weight>k__BackingField: 3
-  durability: 25
+  - {fileID: 11400000, guid: 7f4b9feb84d7a1942b24ae7fef13b01e, type: 2}
+  <itemSprite>k__BackingField: {fileID: 21300000, guid: b3833642e9b000344971fa40138ab0dd, type: 3}
+  <Weight>k__BackingField: 0
   maxDurability: 25
+  DamageChanceReduction: 0
+  MiningEfficiency: 1

@@ -6,5 +6,5 @@ using Sirenix.OdinInspector;
 public class ZoneData : SerializedScriptableObject
 {
     [SerializeField] NodeData node;
-    [field: SerializeField] public Dictionary<ItemData, int> availableItems { get; private set; }
+    [field: SerializeField] public List<PlayerAction> gatherActions; 
 }

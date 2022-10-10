@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399e306a3a2d0c44fb4aec0dc0372a8f, type: 3}
-  m_Name: Mining
+  m_Script: {fileID: 11500000, guid: 3bcbcb45bdd602b409e3e5ade3504fff, type: 3}
+  m_Name: Gold
   m_EditorClassIdentifier: 
-  name: 
-  startSound: {fileID: 0}
-  completeSound: {fileID: 0}
-  progressSound: {fileID: 0}
-  miningRate: 10
+  name: Gold
+  meltingPoint: 1950

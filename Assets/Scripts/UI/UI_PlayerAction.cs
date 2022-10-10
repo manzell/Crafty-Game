@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
 using System.Linq;
-using static UnityEditor.Progress;
 
 public class UI_PlayerAction : MonoBehaviour, IDropHandler
 {
@@ -15,65 +13,74 @@ public class UI_PlayerAction : MonoBehaviour, IDropHandler
     [SerializeField] GameObject progressFrame;
     [SerializeField] Image progressImage, inputIcon;
     [SerializeField] Button button;
-    [field: SerializeField] public IEnumerable<Item> Inputs { get; private set; } 
 
+    float time;
+    Player player;
 
     public void Setup(PlayerAction action)
     {
         this.action = action;
         actionName.text = action.name;
-        button.onClick.AddListener(() => action.Action(FindObjectOfType<Player>())); 
-
-        if (action is ITakeTime timedAction)
-            button.onClick.AddListener(() => StartCoroutine(AnimateAction(timedAction.time)));
-        else
-            button.onClick.AddListener(() => StartCoroutine(AnimateAction(0)));
+        ResetAction(); 
     }
 
-    public void ClearItem()
+    public void ClearItem() => inputIcon.sprite = null; 
+
+    public void StartAction()
     {
-        Inputs = null;
-        inputIcon.sprite = null; 
-    }
+        player = FindObjectOfType<Player>();
+        action.Prepare(player);
 
-    public IEnumerator AnimateAction(float time) 
-    {
-        float progress = 0;
-        Vector2 size = progressImage.rectTransform.sizeDelta;
-        button.enabled = false;
+        time = Time.time;
 
-        AudioSource source = GetComponent<AudioSource>(); 
-
-        if(action.startSound)
-            source.PlayOneShot(action.startSound);
-
-        while (progress < time)
+        if (action is OngoingAction ongoingAction)
         {
-            progress += (action as ITakeTime).interval;
-            if (action.intervalSound != null)
-                source.PlayOneShot(action.intervalSound);
+            AudioSource source = GetComponent<AudioSource>();
 
-            float progressPct = Mathf.Clamp01(progress / time);
-            float frameWidth = progressFrame.GetComponent<RectTransform>().rect.width;
+            StartCoroutine(ongoingAction.Progress(player));
+            StartCoroutine(ProgressAnimation(ongoingAction));
 
-            size.x = frameWidth * progressPct; 
-            progressImage.rectTransform.sizeDelta = size;
-
-            yield return new WaitForSeconds((action as ITakeTime).interval);
+            ongoingAction.prepareEvent.AddListener(player => { if (ongoingAction.startSound) source.PlayOneShot(ongoingAction.startSound); });
+            ongoingAction.progressEvent.AddListener(player => { if (ongoingAction.progressSound) source.PlayOneShot(ongoingAction.progressSound); });
+            ongoingAction.completeEvent.AddListener(player => { if (ongoingAction.completeSound) source.PlayOneShot(ongoingAction.completeSound); });
+        }
+        else
+        {
+            action.Complete(player);
         }
 
-        if (action.completeSound)
-            source.PlayOneShot(action.completeSound);
-        action.actionEnd.Invoke(FindObjectOfType<Player>(), Inputs);
+        button.GetComponentInChildren<TextMeshProUGUI>().text = $"Stop {action.name}";
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(ResetAction);
+    }
 
-        size.x = 0;
-        progressImage.rectTransform.sizeDelta = size;
-        button.enabled = true;
+    public void ResetAction()
+    {
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(StartAction);
+        button.GetComponentInChildren<TextMeshProUGUI>().text = $"Start {action.name}";
+    }
+
+    public IEnumerator ProgressAnimation(OngoingAction action) 
+    {
+        while(player.currentAction == action)
+        {
+            float progress = ((Time.time - time) % action.interval) / action.interval;
+            float frameWidth = progressFrame.GetComponent<RectTransform>().rect.width;
+            Vector2 size = progressImage.rectTransform.sizeDelta;
+            
+            size.x = frameWidth * progress;
+            progressImage.rectTransform.sizeDelta = size;
+
+            yield return new WaitForSeconds(1f/30);
+        }
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        Inputs = eventData.selectedObject.GetComponent<UI_Item>().Items;
-        inputIcon.sprite = Inputs.First().Data.itemSprite;
+        action.SetInputs(eventData.selectedObject.GetComponent<UI_DraggableItem>().Items);        
+        inputIcon.sprite = action.Inputs.First().Data.itemSprite;
+
+        button.enabled = action.Can(player);
     }
 } 

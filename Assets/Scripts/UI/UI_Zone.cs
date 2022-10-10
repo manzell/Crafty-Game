@@ -20,10 +20,14 @@ public class UI_Zone : MonoBehaviour
 
         foreach (Item item in player.inventory)
             foreach (PlayerAction action in item.Actions)
-                if(action.Can(player, player.inventory) && !actions.Contains(action))
-                    actions.Add(action);
+                actions.Add(action);
 
-        foreach (PlayerAction action in actions)
-            Instantiate(playerActionPrefab, transform).GetComponent<UI_PlayerAction>().Setup(action); 
+        foreach (PlayerAction action in zone.gatherActions)
+            actions.Add(action); 
+
+        foreach (PlayerAction action in actions.Distinct())
+        {
+            Instantiate(playerActionPrefab, transform).GetComponent<UI_PlayerAction>().Setup(action);
+        }
     }    
 }

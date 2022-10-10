@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
-using static UnityEditor.Progress;
 
 public class UI_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -16,42 +15,34 @@ public class UI_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     [SerializeField] GameObject hoverBox;
     [SerializeField] GameObject dragItemPrefab;
 
-    GameObject dragItem; 
-    Sprite oldSprite;
-    bool dragging; 
-
     public void Setup(IEnumerable<Item> items)
     {
         Items = items;
-        Debug.Log(Items); 
+        itemSprite.sprite = items.First().Data.itemSprite;
+        hoverText.text = $"{items.First().name}\nWeight: {items.Sum(item => item.Weight).ToString("0.0")}kg";
 
         if (items.Count() > 1)
             quantity.text = items.Count().ToString();
         else
             quantity.enabled = false;
-
-        itemSprite.sprite = items.First().Data.itemSprite;
-        oldSprite = itemSprite.sprite; 
-        hoverText.text = $"{items.First().name}\nWeight: {items.Sum(item => item.weight).ToString("0.0")}kg"; 
     }
-
 
     public void OnPointerEnter(PointerEventData eventData) => hoverBox.SetActive(true);
     public void OnPointerExit(PointerEventData eventData) => hoverBox.SetActive(false);
-
-    public void OnDrag(PointerEventData eventData) => dragItem.transform.position = Input.mousePosition;
+    public void OnDrag(PointerEventData eventData) => eventData.selectedObject.transform.position = Input.mousePosition;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        dragItem = Instantiate(dragItemPrefab, transform);
-        dragItem.GetComponent<Image>().sprite = itemSprite.sprite;
-        dragItem.AddComponent<CanvasGroup>().blocksRaycasts = false; 
-        eventData.selectedObject = gameObject;
+        eventData.selectedObject = Instantiate(dragItemPrefab, transform);
+        eventData.selectedObject.AddComponent<UI_DraggableItem>().Items = Items;
+        eventData.selectedObject.AddComponent<CanvasGroup>().blocksRaycasts = false;
+        eventData.selectedObject.GetComponent<CanvasGroup>().alpha = 0.75f;
+        eventData.selectedObject.GetComponent<Image>().sprite = itemSprite.sprite;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Destroy(dragItem);
-        dragItem = null; 
+        Destroy(eventData.selectedObject);
+        eventData.selectedObject = null; 
     }
 }

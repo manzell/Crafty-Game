@@ -7,12 +7,14 @@ public class PickAxe : Item, IDurableItem, IMiningTool
     [field: SerializeField] public float Durability { get; private set; }
     [field: SerializeField] public float MaxDurability { get; private set; }
     [field: SerializeField] public float DamageChanceReduction { get; private set; }
+    [field: SerializeField] public float MiningEfficiency { get; private set; }
 
     public override void Setup(ItemData data)
     {
         Durability = (data as PickAxeData).maxDurability;
         MaxDurability = (data as PickAxeData).maxDurability;
         DamageChanceReduction = (data as PickAxeData).DamageChanceReduction;
+        MiningEfficiency = (data as PickAxeData).MiningEfficiency;
 
         base.Setup(data);
     }
@@ -26,11 +28,5 @@ public class PickAxe : Item, IDurableItem, IMiningTool
 
         if (Durability <= 0)
             Break(); 
-    }
-
-    public void Break()
-    {
-        Debug.Log($"{name} broke!");
-        FindObjectOfType<Player>().RemoveItem(this);
     }
 }

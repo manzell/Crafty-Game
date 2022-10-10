@@ -9,62 +9,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca032e093c4b2ed4f9f8947214acbbdc, type: 3}
-  m_Name: Bog Ore
+  m_Script: {fileID: 11500000, guid: 1c1e30e84d503014283a11dead340d6c, type: 3}
+  m_Name: Quarry
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 568b783d009fda044b3a72a73410da30, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: <weight>k__BackingField
-      Entry: 4
-      Data: 1
-    - Name: <MetalConcentrations>k__BackingField
+    - Name: <availableItems>k__BackingField
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[OreData+MetalType, Assembly-CSharp],[System.Single,
+      Data: 0|System.Collections.Generic.Dictionary`2[[ItemData, Assembly-CSharp],[System.Int32,
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[OreData+MetalType,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[ItemData, Assembly-CSharp]],
+        mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 3
+      Entry: 10
       Data: 0
     - Name: $v
-      Entry: 4
-      Data: 0.15
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
       Entry: 3
       Data: 1
-    - Name: $v
-      Entry: 4
-      Data: 0.01
     - Name: 
       Entry: 8
       Data: 
@@ -74,7 +54,4 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  name: Bog Ore
-  <Actions>k__BackingField: []
-  itemImage: {fileID: 0}
-  metalType: 0
+  node: {fileID: 11400000, guid: 67a832fef86410a4f9c7e10de23764a5, type: 2}

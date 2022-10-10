@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PickAxeData : ItemData
 {
-    public float maxDurability;
-    public float DamageChanceReduction;
+    public float maxDurability = 10f;
+    public float DamageChanceReduction = 0f;
+    public float MiningEfficiency = 1f;
 }

@@ -6,14 +6,15 @@ using Sirenix.OdinInspector;
 
 public class Player : SerializedMonoBehaviour
 {
-    public UnityEvent<PlayerAction> gainLevelEvent = new(); 
-    public UnityEvent<Item> addItemEvent = new(), removeItemEvent = new();
-
-    [field: SerializeField] public List<Item> inventory { get; private set; }
-    [field: SerializeField] public Dictionary<PlayerAction, int> experience { get; private set; }
+    public UnityEvent<Item> addItemEvent { get; private set; } = new();
+    public UnityEvent<Item> removeItemEvent { get; private set; } = new();
+    public UnityEvent<PlayerAction> gainLevelEvent { get; private set; } = new();
 
     public ZoneData currentZone;
     public PlayerAction currentAction { get; private set; }
+
+    [field: SerializeField] public List<Item> inventory { get; private set; }
+    [field: SerializeField] public Dictionary<PlayerAction, int> experience { get; private set; }
 
     public void SetCurrentAction(PlayerAction action) => currentAction = action;
 
