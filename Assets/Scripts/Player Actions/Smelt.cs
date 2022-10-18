@@ -15,19 +15,19 @@ using UnityEngine;
  * Before we create new molten ore, we cool any existing molten ore into Ingots of 
  * 
  */
-[CreateAssetMenu]
-public class Smelt : OngoingAction
+
+public class Smelt : PlayerAction
 {
     public int temperature;
-    public float volume; 
+    public float volume;
 
-    public override bool Can(Player player) => Inputs.Any(input => input is ISmeltable);
+    public override bool Can(Player player, Zone zone) => zone.Inputs.Any(input => input is ISmeltable) && zone.Actions.Contains(this); 
 
-    public override void Complete(Player player)
+    public override void Complete(Player player, Zone zone)
     {
         Dictionary<Metal, float> metalWeight = new(); 
 
-        foreach(Item item in Inputs.Where(_item => _item is ISmeltable))
+        foreach(Item item in zone.Inputs.Where(_item => _item is ISmeltable))
         {
             foreach(KeyValuePair<Metal, float> metals in (item as ISmeltable).MetalConcentrations)
             {                
@@ -48,16 +48,16 @@ public class Smelt : OngoingAction
                 Ingot ingot = new Ingot(); 
 
                 ingot.SetWeight(ingotWeight);
-                ingot.MetalConcentrations.Add(metal, Mathf.Pow(metalWeight[metal] / Inputs.Sum(input => input.Weight), player.GetLevel(this) + 1)); 
+                ingot.MetalConcentrations.Add(metal, Mathf.Pow(metalWeight[metal] / zone.Inputs.Sum(input => input.Weight), player.GetLevel(this) + 1)); 
             }
         }
     }
 
-    public override void Prepare(Player player)
+    public override void Prepare(Player player, Zone zone)
     {
     }
 
-    public override IEnumerator Progress(Player player)
+    public override IEnumerator Progress(Player player, Zone zone)
     {
         yield return null; 
     }

@@ -18,13 +18,15 @@ public class UI_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public void Setup(IEnumerable<Item> items)
     {
         Items = items;
-        itemSprite.sprite = items.First().Data.itemSprite;
-        hoverText.text = $"{items.First().name}\nWeight: {items.Sum(item => item.Weight).ToString("0.0")}kg";
 
-        if (items.Count() > 1)
-            quantity.text = items.Count().ToString();
-        else
-            quantity.enabled = false;
+        if (items.Count() == 0) return; 
+
+        itemSprite.sprite = items.First().Data.itemSprite;
+        itemSprite.color = items.First().Data.itemTint;
+        hoverText.text = $"{items.First().name}\nWeight: {items.Sum(item => item.Weight).ToString("0.0")}kg";
+        quantity.text = items.Count().ToString();
+        
+        quantity.gameObject.SetActive(items.Count() > 1);
     }
 
     public void OnPointerEnter(PointerEventData eventData) => hoverBox.SetActive(true);

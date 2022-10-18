@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca032e093c4b2ed4f9f8947214acbbdc, type: 3}
-  m_Name: Bog Ore
+  m_Name: Iron Ore
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: baa934120dc36254d82bcba560f1296a, type: 2}
+    - {fileID: 11400000, guid: 591dd2a0aa9376a4a9ccd1603c29ec18, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -34,15 +36,57 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
       Data: 0
+    - Name: $v
+      Entry: 7
+      Data: Distribution, Assembly-CSharp
+    - Name: mean
+      Entry: 4
+      Data: 0.65
+    - Name: deviation
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: Distribution, Assembly-CSharp
+    - Name: mean
+      Entry: 4
+      Data: 0.005
+    - Name: deviation
+      Entry: 4
+      Data: 0.01
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  name: Bog Ore
+  name: Iron Ore
   <Actions>k__BackingField: []
   <itemSprite>k__BackingField: {fileID: 21300000, guid: a2e365cc04ee8004883c3c706fd1fe92, type: 3}
-  <itemTint>k__BackingField: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
-  <Weight>k__BackingField: 0
+  <itemTint>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <Weight>k__BackingField: 10

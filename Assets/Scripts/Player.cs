@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events; 
-using Sirenix.OdinInspector; 
+using Sirenix.OdinInspector;
+using System.Linq;
 
 public class Player : SerializedMonoBehaviour
 {
@@ -39,7 +40,7 @@ public class Player : SerializedMonoBehaviour
         if (!experience.TryAdd(action, amount))
             experience[action] += amount;
 
-        Debug.Log($"Gaines {amount} XP in {action.name}");
+        Debug.Log($"Gained {amount} XP in {action.name}");
 
         if (GetLevel(action) != oldLevel)
             gainLevelEvent.Invoke(action); 
@@ -48,5 +49,12 @@ public class Player : SerializedMonoBehaviour
     private void Awake()
     {
         gainLevelEvent.AddListener(action => Debug.Log($"Player is now Level {GetLevel(action)} in {action}")); 
+
+    }
+
+    private void Start()
+    {
+        foreach (Item item in inventory.Where(item => item.Data != null))
+            item.Setup(item.Data);
     }
 }

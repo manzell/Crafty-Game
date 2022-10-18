@@ -709,19 +709,19 @@ MonoBehaviour:
       Data: 0
     - Name: <Weight>k__BackingField
       Entry: 4
-      Data: 5
+      Data: 0
     - Name: <Durability>k__BackingField
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: <MaxDurability>k__BackingField
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: <DamageChanceReduction>k__BackingField
       Entry: 4
       Data: 0
     - Name: <MiningEfficiency>k__BackingField
       Entry: 4
-      Data: 1
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -751,15 +751,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  gainLevelEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  addItemEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  removeItemEvent:
-    m_PersistentCalls:
-      m_Calls: []
   currentZone: {fileID: 11400000, guid: 3ea81297cbc93864dafb0f13fcc0b979, type: 2}
 --- !u!4 &1925976247
 Transform:

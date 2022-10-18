@@ -5,6 +5,8 @@ using Sirenix.OdinInspector;
 
 public class ZoneData : SerializedScriptableObject
 {
-    [SerializeField] NodeData node;
-    [field: SerializeField] public List<PlayerAction> gatherActions; 
+    public new string name;
+    public DropTable dropTable;
+    public List<PlayerAction> actions; 
+
 }

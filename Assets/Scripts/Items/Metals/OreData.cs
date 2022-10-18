@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OreData : ItemData, IMineable, ISmeltable
+[CreateAssetMenu]
+public class OreData : ItemData, IMineable
 {
-    [SerializeField] Metal metalType;
-    [field: SerializeField] public Dictionary<Metal, float> MetalConcentrations { get; private set; }
+    [field: SerializeField] public Dictionary<Metal, Distribution> MetalConcentrations { get; private set; }
 
-}
-
-public interface ISmeltable
-{
-    public Dictionary<Metal, float> MetalConcentrations { get; }
-    public float Weight { get; set; }
+    public override Item Clone() => new Ore(this); 
 }

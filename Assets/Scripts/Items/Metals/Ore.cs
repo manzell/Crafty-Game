@@ -8,9 +8,11 @@ public class Ore : Item, IMineable, ISmeltable
 
     public Ore(ItemData data)
     {
-        Data = data; 
+        Data = data;
 
-        foreach(KeyValuePair<Metal, float> kvp in (data as OreData).MetalConcentrations)
-            MetalConcentrations.Add(kvp.Key, Random.Range(0, kvp.Value));
+        foreach (KeyValuePair<Metal, Distribution> kvp in (data as OreData).MetalConcentrations)
+            MetalConcentrations.Add(kvp.Key, kvp.Value.Generate());
+
+        Setup(data); 
     }
 }

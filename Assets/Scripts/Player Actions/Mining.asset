@@ -12,8 +12,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399e306a3a2d0c44fb4aec0dc0372a8f, type: 3}
   m_Name: Mining
   m_EditorClassIdentifier: 
-  name: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 4b6ce5b47312e6b4eaa3b7115fa451ca, type: 2}
+    - {fileID: 11400000, guid: 26a12b0f31542f5419373ba19d8b715d, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: <Inputs>k__BackingField
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Item, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: mineables
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Mining+miningOreTypeRate, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: Mining+miningOreTypeRate, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 0
+    - Name: gatherRate
+      Entry: 4
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Mining+miningOreTypeRate, Assembly-CSharp
+    - Name: item
+      Entry: 10
+      Data: 1
+    - Name: gatherRate
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  name: Mining
   startSound: {fileID: 0}
   completeSound: {fileID: 0}
-  progressSound: {fileID: 0}
-  miningRate: 10
+  progressSound: {fileID: 8300000, guid: 3c0b3afa21e8eb645831389fb1db7ebe, type: 3}
+  miningRate: 5

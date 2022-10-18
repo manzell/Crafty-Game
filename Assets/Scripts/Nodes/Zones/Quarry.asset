@@ -15,43 +15,31 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 568b783d009fda044b3a72a73410da30, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: <availableItems>k__BackingField
+    - Name: dropTable
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[ItemData, Assembly-CSharp],[System.Int32,
-        mscorlib]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[PlayerAction, Assembly-CSharp],[Item,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[ItemData, Assembly-CSharp]],
-        mscorlib
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[PlayerAction,
+        Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
       Data: 0
-    - Name: $v
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  node: {fileID: 11400000, guid: 67a832fef86410a4f9c7e10de23764a5, type: 2}
+  name: The Quarry
+  actions: []

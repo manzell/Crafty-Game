@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
 /* How mining works:
  * 
@@ -15,57 +12,62 @@ using UnityEngine.Events;
  * Higher quality gathering items have more durability
  */
 
-[CreateAssetMenu]
-public class Mining : OngoingAction
+public class Mining : PlayerAction
 {
     [SerializeField] float miningRate = 10f;
-    [SerializeField] List<(ItemData item, float gatherRate)> gatherables;
+    [SerializeField] List<miningOreTypeRate> mineables;
 
     IMiningTool tool;
 
-    public override bool Can(Player player)
+    struct miningOreTypeRate
     {
-        bool playerIdle = player.currentAction == null;
-
-        Debug.Log(Inputs);
-
-        bool toolAvailable = Inputs.Any(input => input is IMiningTool && (input as IMiningTool).Durability > 0);
-
-        return playerIdle && toolAvailable;
+        public ItemData item;
+        public float gatherRate; 
     }
 
-    public override void Prepare(Player player)
+    public override bool Can(Player player, Zone zone)
+    {
+        List<string> failMessages = new();
+
+        if ((IMiningTool)zone.Inputs.First(input => input is IMiningTool) == null)
+            failMessages.Add("No Mining Tool!");
+        if (!zone.DropTable.ContainsKey(this))
+            failMessages.Add("No Mineables");
+
+        return failMessages.Count == 0; 
+    }
+
+    public override void Prepare(Player player, Zone zone)
     {
         interval = Mathf.Max(interval - player.GetLevel(this) * 0.1f, 5f);
-        tool = Inputs.First(input => input is IMiningTool) as IMiningTool;
-        prepareEvent.Invoke(player); 
+        tool = zone.Inputs.First(input => input is IMiningTool && (input as IMiningTool).Durability > 0) as IMiningTool;
+        player.SetCurrentAction(this);
+        prepareEvent.Invoke(player, zone); 
     }
 
-    public override IEnumerator Progress(Player player)
+    public override IEnumerator Progress(Player player, Zone zone)
     {
-        while(player.currentAction == this)
-        {
-            yield return new WaitForSeconds(interval);
+        yield return new WaitForSeconds(interval);
 
-            float seed = Random.Range(0, gatherables.Sum(gatherable => gatherable.gatherRate));
+        while (player.currentAction == this && Can(player, zone))
+        {
+            float seed = Random.Range(0, mineables.Sum(gatherable => gatherable.gatherRate));
             float damageChance = Mathf.Clamp(.5f - (player.GetLevel(this) * 0.02f), 0.075f, .5f) - tool.DamageChanceReduction;
             float amountMined = miningRate * tool.MiningEfficiency;
-            ItemData minedItem;
 
-            foreach ((ItemData item, float gatherRate) gatherable in gatherables)
+            foreach (miningOreTypeRate mineable in mineables)
             {
-                seed -= gatherable.gatherRate;
+                seed -= mineable.gatherRate;
 
                 if (seed <= 0)
                 {
-                    minedItem = gatherable.item;
-                    Ore ore = new Ore(minedItem);
-
+                    Ore ore = new Ore(mineable.item);
                     ore.SetWeight(amountMined);
+
+                    Debug.Log($"Mining Successful, mined {amountMined.ToString("0.0")}kg of {ore.name}");
+
                     player.GiveItem(ore);
                     player.GiveExperience(this, Mathf.RoundToInt(10 * amountMined / interval));
-
-                    Debug.Log($"Mining Successful, mined 10kg of {ore.name}");
 
                     break;
                 }
@@ -74,13 +76,18 @@ public class Mining : OngoingAction
             if (Random.value < damageChance)
                 tool.AdjustDurability(-1f);
 
-            progressEvent.Invoke(player);
-        }  
+            progressEvent.Invoke(player, zone);
+
+            yield return new WaitForSeconds(interval);
+        }
+
+        Complete(player, zone); 
     }
 
-    public override void Complete(Player player)
+    public override void Complete(Player player, Zone zone)
     {
-        completeEvent.Invoke(player); 
+        Debug.Log($"{name} Complete(player)");
+        completeEvent.Invoke(player, zone); 
         player.SetCurrentAction(null); 
     }
 }
