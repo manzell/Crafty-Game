@@ -8,42 +8,43 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] GameObject ItemPrefab; 
     Player player;
 
-    Dictionary<string, UI_Item> uiItems = new(); 
+    List<UI_Item> uiItems = new(); 
 
     private void Awake()
     {
         player = FindObjectOfType<Player>();
-        player.addItemEvent.AddListener(OnGiveItem);
+        player.addItemEvent.AddListener(SetupUIItem);
         player.removeItemEvent.AddListener(OnRemoveItem);
 
-        foreach (string itemName in player.inventory.Select(item => item.name).Distinct())
-            CreateUIItem(itemName); 
+        foreach (Item item in player.Inventory)
+            SetupUIItem(item); 
+
+        //foreach (string itemName in player.Inventory.Select(item => item.name).Distinct())
+        //    CreateUIItem(itemName);
     }
 
-    void CreateUIItem(string itemName)
+    void SetupUIItem(Item item)
     {
-        UI_Item uiItem = Instantiate(ItemPrefab, transform).GetComponent<UI_Item>();
-        uiItem.Setup(player.inventory.Where(item => item.name == itemName));
-        uiItems.Add(itemName, uiItem);
+        UI_Item itemUIStack = uiItems.Where(uiItem => uiItem.Items.First().name == item.name).FirstOrDefault(); 
+
+        if(itemUIStack == null)
+        {
+            UI_Item newUIItem = Instantiate(ItemPrefab, transform).GetComponent<UI_Item>();
+            newUIItem.Setup(item); 
+            uiItems.Add(newUIItem);
+        }
     }
 
-    void UpdateUIItem(string itemName)
+    void UpdateUIItem(Item item)
     {
-        if (uiItems.ContainsKey(itemName))
-            uiItems[itemName].Setup(player.inventory.Where(i => i.name == itemName)); 
-    }
+        UI_Item uiStack = uiItems.Where(_item => _item.name == item.name).FirstOrDefault();
 
-    void OnGiveItem(Item item)
-    {
-        if (uiItems.ContainsKey(item.name))
-            UpdateUIItem(item.name); 
-        else
-            CreateUIItem(item.name);
+        if (uiStack != null)
+            uiStack.Setup(item); 
     }
 
     void OnRemoveItem(Item item)
     {
-        if (uiItems.ContainsKey(item.name))
-            UpdateUIItem(item.name);
+        throw new System.NotImplementedException(); 
     }
 }

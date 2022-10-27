@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c1e30e84d503014283a11dead340d6c, type: 3}
-  m_Name: Quarry
+  m_Script: {fileID: 11500000, guid: d2249f6d3570a3f419000d37a01607b8, type: 3}
+  m_Name: Smelting
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,7 +21,11 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: The Quarry
-  dropTable: {fileID: 11400000, guid: 3cdf3f9caae212a42911f00293d39a52, type: 2}
-  actions:
-  - {fileID: 11400000, guid: d48a8076a781dcc47b299ae386456f71, type: 2}
+  name: Smelter
+  progressSound: {fileID: 0}
+  startSound: {fileID: 0}
+  completeSound: {fileID: 0}
+  maxTemperature: 2500
+  forgeLevel: 10
+  volume: 50
+  allowableAlloys: []

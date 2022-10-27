@@ -25,6 +25,6 @@ public class PickAxe : Item, IDurableItem, IMiningTool
             Debug.Log($"{name} lost durability! ({Mathf.RoundToInt(Durability)}/{Mathf.RoundToInt(MaxDurability)})");
 
         if (Durability <= 0)
-            Break(); 
+            Break();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Zone : MonoBehaviour
 {
-    [field: SerializeField] public Dictionary<PlayerAction, Item> DropTable { get; private set; }
+    [field: SerializeField] public DropTable DropTable { get; private set; }
 
     public ZoneData ZoneData { get; private set; }
     public List<Item> Inputs {  get; private set; }   

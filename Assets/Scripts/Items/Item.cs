@@ -5,14 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    public string name => Data?.name;
-    [field: SerializeField] public List<PlayerAction> Actions { get; private set; }
+    public string name;
+    [field: SerializeField] public List<PlayerAction> Actions { get; private set; } = new(); 
     [field: SerializeField] public ItemData Data { get; protected set; }
-    [field: SerializeField] public float Weight { get; set; } /* kilograms */
+    [field: SerializeField] public float Weight { get; set; } = 0f; /* kilograms */
 
-
+    public Item() { }
     public Item(ItemData data)
     {
+        name = data.name; 
         Data = data; 
         Actions = data.Actions; 
         Weight = data.Weight;

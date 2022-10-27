@@ -461,7 +461,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -300}
-  m_SizeDelta: {x: 0, y: 60}
+  m_SizeDelta: {x: 0, y: 125}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &975592706
 MonoBehaviour:
@@ -643,6 +643,62 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1191152517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1191152519}
+  - component: {fileID: 1191152518}
+  m_Layer: 0
+  m_Name: Game
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1191152518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191152517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcf69f30bb0ddc419df07c4a7c2cb84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <metals>k__BackingField:
+  - {fileID: 11400000, guid: abdd3f376a9b6e544864786a538cb96f, type: 2}
+  - {fileID: 11400000, guid: 23752ff117c4824409f6139967fd20c7, type: 2}
+  - {fileID: 11400000, guid: d1b34d84bbdc9914b8ca49a292b80bc6, type: 2}
+  - {fileID: 11400000, guid: 8f9484ced91479149863b86fd5c61d73, type: 2}
+  - {fileID: 11400000, guid: 8f9484ced91479149863b86fd5c61d73, type: 2}
+  - {fileID: 11400000, guid: 591dd2a0aa9376a4a9ccd1603c29ec18, type: 2}
+  - {fileID: 11400000, guid: baa934120dc36254d82bcba560f1296a, type: 2}
+  - {fileID: 11400000, guid: decfded299e31c1458840c24f54623f7, type: 2}
+  - {fileID: 11400000, guid: 0e4f0a2fb24de7d47b574c32c6c2c261, type: 2}
+  - {fileID: 11400000, guid: 700e288ca69b2f84b9abf666d82cf93a, type: 2}
+  - {fileID: 11400000, guid: 325d2f40d77fc6143a74ad3c504ba1c4, type: 2}
+--- !u!4 &1191152519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191152517}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 694.4829, y: 665.89087, z: 20.179111}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1925976245
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,69 +731,19 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 944108341fa416a4fa44b7421c61fb50, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: <inventory>k__BackingField
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Item, Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 1|PickAxe, Assembly-CSharp
-    - Name: <Actions>k__BackingField
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[PlayerAction, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: <Data>k__BackingField
-      Entry: 10
-      Data: 0
-    - Name: <Weight>k__BackingField
-      Entry: 4
-      Data: 0
-    - Name: <Durability>k__BackingField
-      Entry: 4
-      Data: 0
-    - Name: <MaxDurability>k__BackingField
-      Entry: 4
-      Data: 0
-    - Name: <DamageChanceReduction>k__BackingField
-      Entry: 4
-      Data: 0
-    - Name: <MiningEfficiency>k__BackingField
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: <experience>k__BackingField
       Entry: 7
-      Data: 3|System.Collections.Generic.Dictionary`2[[PlayerAction, Assembly-CSharp],[System.Int32,
+      Data: 0|System.Collections.Generic.Dictionary`2[[PlayerAction, Assembly-CSharp],[System.Int32,
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 4|System.Collections.Generic.ObjectEqualityComparer`1[[PlayerAction,
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[PlayerAction,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 8
@@ -752,6 +758,10 @@ MonoBehaviour:
       Entry: 8
       Data: 
   currentZone: {fileID: 11400000, guid: 3ea81297cbc93864dafb0f13fcc0b979, type: 2}
+  <Inventory>k__BackingField: []
+  <StartingInventory>k__BackingField:
+  - {fileID: 11400000, guid: 944108341fa416a4fa44b7421c61fb50, type: 2}
+  - {fileID: 11400000, guid: 4b6ce5b47312e6b4eaa3b7115fa451ca, type: 2}
 --- !u!4 &1925976247
 Transform:
   m_ObjectHideFlags: 0

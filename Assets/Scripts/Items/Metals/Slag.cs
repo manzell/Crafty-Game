@@ -4,4 +4,7 @@ using UnityEngine;
 
 public class Slag : Item
 {
+    public Slag(ItemData data) : base(data)
+    {
+    }
 }

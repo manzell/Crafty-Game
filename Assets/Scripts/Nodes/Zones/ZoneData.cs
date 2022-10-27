@@ -8,5 +8,4 @@ public class ZoneData : SerializedScriptableObject
     public new string name;
     public DropTable dropTable;
     public List<PlayerAction> actions; 
-
 }

@@ -9,24 +9,17 @@ using static Unity.VisualScripting.Member;
 
 public class UI_Zone : MonoBehaviour
 {
-    Zone zone;
-    UI_Action uiDefaultAction;
-
+    [SerializeField] UI_Action uiDefaultAction;
+    [SerializeField] Zone zone; 
     [SerializeField] TextMeshProUGUI zoneName;
     [SerializeField] GameObject actionPrefab;
-
-    private void Awake()
-    {;
-        zone = GetComponent<Zone>();
-        uiDefaultAction = GetComponent<UI_Action>();
-    }
 
     public void Setup(ZoneData zoneData)
     {
         zone.Setup(zoneData);
         zoneName.text = zoneData.name;
 
-        uiDefaultAction.Setup(zone.DropTable.Keys?.Concat(zone.Actions), zone);
+        uiDefaultAction.Setup(zone.DropTable.Table.Keys, zone);
 
         foreach (UI_Action uiAction in GetComponentsInChildren<UI_Action>().Where(uiAction => uiAction != uiDefaultAction))
             Destroy(uiAction.gameObject); 
@@ -34,5 +27,4 @@ public class UI_Zone : MonoBehaviour
         foreach(PlayerAction action in zoneData.actions)
             Instantiate(actionPrefab, transform).GetComponent<UI_Action>().Setup(action, zone);
     }
-
 }

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface ISmeltable
 {
-    public Dictionary<Metal, float> MetalConcentrations { get; }
+    public MetalMixture MetalConcentrations { get; }
     public float Weight { get; set; }
 }

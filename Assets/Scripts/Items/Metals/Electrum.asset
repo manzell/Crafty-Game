@@ -9,27 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca032e093c4b2ed4f9f8947214acbbdc, type: 3}
-  m_Name: Iron Ore
+  m_Script: {fileID: 11500000, guid: 3bcbcb45bdd602b409e3e5ade3504fff, type: 3}
+  m_Name: Electrum
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: baa934120dc36254d82bcba560f1296a, type: 2}
     - {fileID: 11400000, guid: 591dd2a0aa9376a4a9ccd1603c29ec18, type: 2}
+    - {fileID: 11400000, guid: 0e4f0a2fb24de7d47b574c32c6c2c261, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: <MetalConcentrations>k__BackingField
+    - Name: mixture
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Metal, Assembly-CSharp],[Distribution,
-        Assembly-CSharp]], mscorlib
+      Data: 0|MetalMixture, Assembly-CSharp
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[Metal, Assembly-CSharp]],
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[MetalData, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 8
@@ -44,17 +43,8 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: $v
-      Entry: 7
-      Data: Distribution, Assembly-CSharp
-    - Name: mean
       Entry: 4
-      Data: 0.65
-    - Name: deviation
-      Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 0.475
     - Name: 
       Entry: 8
       Data: 
@@ -65,17 +55,8 @@ MonoBehaviour:
       Entry: 10
       Data: 1
     - Name: $v
-      Entry: 7
-      Data: Distribution, Assembly-CSharp
-    - Name: mean
       Entry: 4
-      Data: 0.005
-    - Name: deviation
-      Entry: 4
-      Data: 0.01
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 0.475
     - Name: 
       Entry: 8
       Data: 
@@ -85,8 +66,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  name: Iron Ore
-  <Actions>k__BackingField: []
-  <itemSprite>k__BackingField: {fileID: 21300000, guid: a2e365cc04ee8004883c3c706fd1fe92, type: 3}
-  <itemTint>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
-  <Weight>k__BackingField: 10
+  name: Electrum
+  meltingPoint: 1060

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bcbcb45bdd602b409e3e5ade3504fff, type: 3}
-  m_Name: Gold
+  m_Name: Zinc
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -53,5 +53,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  name: Gold
-  meltingPoint: 1060
+  name: Zinc
+  meltingPoint: 420

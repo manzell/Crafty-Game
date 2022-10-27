@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using static UnityEditor.Progress;
 
 public class UI_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public IEnumerable<Item> Items { get; private set; }
+    [SerializeField] List<Item> Items = new();
     [SerializeField] TextMeshProUGUI quantity;
     [SerializeField] TextMeshProUGUI hoverText;
     [SerializeField] Image itemSprite; 
@@ -17,16 +18,25 @@ public class UI_Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void Setup(IEnumerable<Item> items)
     {
-        Items = items;
+        Items = items.ToList();
 
-        if (items.Count() == 0) return; 
+        if (items.Count() == 0) 
+            return;
+        else 
+            Setup(items.First()); 
+    }
 
-        itemSprite.sprite = items.First().Data.itemSprite;
-        itemSprite.color = items.First().Data.itemTint;
-        hoverText.text = $"{items.First().name}\nWeight: {items.Sum(item => item.Weight).ToString("0.0")}kg";
-        quantity.text = items.Count().ToString();
-        
-        quantity.gameObject.SetActive(items.Count() > 1);
+    public void Setup(Item item)
+    {
+        if (item.Data != null)
+        {
+            itemSprite.sprite = item.Data.itemSprite;
+            itemSprite.color = item.Data.itemTint;
+        }
+
+        quantity.text = Items.Count() > 1 ? Items.Count().ToString() : string.Empty; 
+        hoverText.text = $"{item.name}\nWeight: {item.Weight.ToString("0.0")}kg";
+        quantity.gameObject.SetActive(Items.Count() > 1);
     }
 
     public void OnPointerEnter(PointerEventData eventData) => hoverBox.SetActive(true);

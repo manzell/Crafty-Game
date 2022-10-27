@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using System.Linq;
 
+[CreateAssetMenu]
 public class DropTable : SerializedScriptableObject
 {
-    public Dictionary<PlayerAction, List<DropTableEntry>> table;
-    [SerializeField] bool alwaysReturnItem; 
-
+    [field: SerializeField] public Dictionary<PlayerAction, List<DropTableEntry>> Table { get; private set; } = new(); 
+    [SerializeField] bool alwaysReturnItem;
+    
     public Item GetDrop(PlayerAction action)
     {
-        if (!table.ContainsKey(action)) 
+        if (!Table.ContainsKey(action)) 
             return null;
 
-        // This assumes that the drop odds are out of 1. 
-        float d = Random.Range(0, alwaysReturnItem ? 1f : table[action].Sum(listEntry => listEntry.odds));
+        float d = Random.Range(0, alwaysReturnItem ? 1f : Table[action].Sum(listEntry => listEntry.odds));
 
-        foreach(DropTableEntry entry in table[action])
+        foreach(DropTableEntry entry in Table[action])
         {
             d -= entry.odds; 
 

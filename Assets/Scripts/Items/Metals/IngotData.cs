@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Metal : ScriptableObject
+public class IngotData : ItemData
 {
-    public new string name;
-    public int meltingPoint; 
+    public override Item Clone() => new Ingot(this);
 }

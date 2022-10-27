@@ -27,19 +27,24 @@ public class Mining : PlayerAction
 
     public override bool Can(Player player, Zone zone)
     {
+        if (!zone.DropTable.Table.ContainsKey(this))
+            return false;
+
         List<string> failMessages = new();
 
-        if ((IMiningTool)zone.Inputs.First(input => input is IMiningTool) == null)
+        if (zone.Inputs.FirstOrDefault(input => input is IMiningTool) == null)
             failMessages.Add("No Mining Tool!");
-        if (!zone.DropTable.ContainsKey(this))
+        if (zone.DropTable.Table[this].Count(x => x.data.Clone() is IMineable) == 0)
             failMessages.Add("No Mineables");
+
+        // Debug.Log($"Mining {failMessages.Count} - {failMessages.Count == 0}"); 
 
         return failMessages.Count == 0; 
     }
 
     public override void Prepare(Player player, Zone zone)
     {
-        interval = Mathf.Max(interval - player.GetLevel(this) * 0.1f, 5f);
+        Interval = Mathf.Max(Interval - player.GetLevel(this) * 0.1f, 5f);
         tool = zone.Inputs.First(input => input is IMiningTool && (input as IMiningTool).Durability > 0) as IMiningTool;
         player.SetCurrentAction(this);
         prepareEvent.Invoke(player, zone); 
@@ -47,7 +52,7 @@ public class Mining : PlayerAction
 
     public override IEnumerator Progress(Player player, Zone zone)
     {
-        yield return new WaitForSeconds(interval);
+        yield return new WaitForSeconds(Interval);
 
         while (player.currentAction == this && Can(player, zone))
         {
@@ -64,10 +69,10 @@ public class Mining : PlayerAction
                     Ore ore = new Ore(mineable.item);
                     ore.SetWeight(amountMined);
 
-                    Debug.Log($"Mining Successful, mined {amountMined.ToString("0.0")}kg of {ore.name}");
+                    Debug.Log($"Mining Successful, mined {ore.Weight.ToString("0.0")}kg of {ore.name}");
 
                     player.GiveItem(ore);
-                    player.GiveExperience(this, Mathf.RoundToInt(10 * amountMined / interval));
+                    player.GiveExperience(this, Mathf.RoundToInt(10 * amountMined / Interval));
 
                     break;
                 }
@@ -78,7 +83,7 @@ public class Mining : PlayerAction
 
             progressEvent.Invoke(player, zone);
 
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(Interval);
         }
 
         Complete(player, zone); 

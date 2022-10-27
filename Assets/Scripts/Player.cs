@@ -14,20 +14,35 @@ public class Player : SerializedMonoBehaviour
     public ZoneData currentZone;
     public PlayerAction currentAction { get; private set; }
 
-    [field: SerializeField] public List<Item> inventory { get; private set; }
+    [field: SerializeField] public List<Item> Inventory { get; private set; }
+    [field: SerializeField] public List<ItemData> StartingInventory { get; private set; }
     [field: SerializeField] public Dictionary<PlayerAction, int> experience { get; private set; }
+
+    private void Awake()
+    {
+        gainLevelEvent.AddListener(action => Debug.Log($"Player is now Level {GetLevel(action)} in {action}"));
+
+        foreach(ItemData itemData in StartingInventory)
+            GiveItem(itemData.Clone());
+    }
 
     public void SetCurrentAction(PlayerAction action) => currentAction = action;
 
     public void GiveItem(Item item)
     {
-        inventory.Add(item);
+        Inventory.Add(item);
         addItemEvent.Invoke(item); 
     }
 
+    public void GiveItems(List<Item> items)
+    {
+        foreach (Item item in items) 
+            GiveItem(item);
+    }   
+
     public void RemoveItem(Item item)
     {
-        if (inventory.Remove(item))
+        if (Inventory.Remove(item))
             removeItemEvent.Invoke(item); 
     }
 
@@ -35,26 +50,14 @@ public class Player : SerializedMonoBehaviour
 
     public void GiveExperience(PlayerAction action, int amount)
     {
+        Debug.Log($"Gained {amount} XP in {action.name}");
+
         int oldLevel = GetLevel(action); 
 
         if (!experience.TryAdd(action, amount))
             experience[action] += amount;
 
-        Debug.Log($"Gained {amount} XP in {action.name}");
-
         if (GetLevel(action) != oldLevel)
             gainLevelEvent.Invoke(action); 
-    }
-
-    private void Awake()
-    {
-        gainLevelEvent.AddListener(action => Debug.Log($"Player is now Level {GetLevel(action)} in {action}")); 
-
-    }
-
-    private void Start()
-    {
-        foreach (Item item in inventory.Where(item => item.Data != null))
-            item.Setup(item.Data);
     }
 }

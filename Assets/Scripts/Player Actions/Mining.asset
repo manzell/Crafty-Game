@@ -23,21 +23,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: <Inputs>k__BackingField
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Item, Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: mineables
       Entry: 7
-      Data: 1|System.Collections.Generic.List`1[[Mining+miningOreTypeRate, Assembly-CSharp]],
+      Data: 0|System.Collections.Generic.List`1[[Mining+miningOreTypeRate, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -73,7 +61,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   name: Mining
+  <Interval>k__BackingField: 5
+  progressSound: {fileID: 8300000, guid: 3c0b3afa21e8eb645831389fb1db7ebe, type: 3}
   startSound: {fileID: 0}
   completeSound: {fileID: 0}
-  progressSound: {fileID: 8300000, guid: 3c0b3afa21e8eb645831389fb1db7ebe, type: 3}
-  miningRate: 5
+  miningRate: 100
